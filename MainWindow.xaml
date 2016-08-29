@@ -1,0 +1,67 @@
+﻿<Window x:Class="Microsoft.Samples.Kinect.DepthBasics.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Depth Basics" 
+        Height="600" Width="700" 
+        Closing="MainWindow_Closing">
+    <Window.Resources>
+        <SolidColorBrush x:Key="MediumGreyBrush" Color="#ff6e6e6e" />
+        <SolidColorBrush x:Key="KinectPurpleBrush" Color="#ff52318f" />
+        <SolidColorBrush x:Key="KinectBlueBrush" Color="#ff00BCF2" />
+        <Style TargetType="{x:Type Image}">
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+        </Style>
+        <Style TargetType="{x:Type Button}" x:Key="ScreenshotButton" >
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <StackPanel Orientation="Horizontal" Background="Transparent">
+                                <TextBlock x:Name="ScreenshotText" Text="{TemplateBinding Content}" TextAlignment="Left"  VerticalAlignment="Center" Foreground="{StaticResource KinectPurpleBrush}" FontSize="15" />
+                                <Grid Margin="9,0,0,0">
+                                    <Image x:Name="ScreenshotNormal" Source="Images\ScreenshotNormal.png" Stretch="None" HorizontalAlignment="Center" />
+                                    <Image x:Name="ScreenshotHover" Source="Images\ScreenshotHover.png" Stretch="None" HorizontalAlignment="Center" Visibility="Collapsed" />
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Visibility" Value="Collapsed" TargetName="ScreenshotNormal" />
+                                <Setter Property="Visibility" Value="Visible" TargetName="ScreenshotHover" />
+                                <Setter Property="Foreground" Value="{StaticResource KinectBlueBrush}" TargetName="ScreenshotText" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Margin="10 0 10 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Image Grid.Row="0" Source="Images\Logo.png" HorizontalAlignment="Left" Stretch="Fill" Height="32" Width="81" Margin="0 10 0 5" />
+        <TextBlock Grid.Row="0" Margin="0 0 -1 0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="{StaticResource MediumGreyBrush}" FontFamily="Segoe UI" FontSize="18">Depth Basics</TextBlock>
+        <Image Grid.Row="0" Source="Images\Status.png" Stretch="None" HorizontalAlignment="Center" Margin="0 0 0 5" />
+
+        <Viewbox Grid.Row="1" HorizontalAlignment="Center">
+            <Image Source="{Binding ImageSource}" Stretch="UniformToFill" />
+        </Viewbox>
+
+        <Button Grid.Row="2" Style="{StaticResource ScreenshotButton}" Content="Screenshot" Height="Auto" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10 10 0 10" />
+
+        <StatusBar Grid.Row="3" HorizontalAlignment="Stretch" Name="statusBar" VerticalAlignment="Bottom" Background="White" Foreground="{StaticResource MediumGreyBrush}">
+            <StatusBarItem Content="{Binding StatusText}" />
+        </StatusBar>
+        <Button x:Name="btnStartRecording" Content="start" HorizontalAlignment="Left" Margin="283,7,0,0" Grid.Row="2" VerticalAlignment="Top" Width="75" Click="btnStartRecording_Click"/>
+        <Button x:Name="btnStopRecording" Content="stop" HorizontalAlignment="Left" Margin="283,37,0,0" Grid.Row="2" VerticalAlignment="Top" Width="75" Click="btnStopRecording_Click" Grid.RowSpan="2"/>
+        <TextBlock x:Name="tbImagePath" HorizontalAlignment="Left" Margin="377,7,0,0" Grid.Row="2" TextWrapping="Wrap" Text="D:/ZY/Pmomo/Data/Cloth2/" VerticalAlignment="Top" Height="20" Width="153" DataContextChanged="tbImagePath_DataContextChanged"/>
+        <TextBlock x:Name="tbBackgroundPath" HorizontalAlignment="Left" Margin="0,32,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="255" Text="D:/ZY/Pmomo/Data/Cloth2/background.png"/>
+        <Button x:Name="btnSaveBackground" Content="save background" HorizontalAlignment="Left" Margin="0,7,0,0" Grid.Row="2" VerticalAlignment="Top" Width="110" Click="btnSaveBackground_Click"/>
+        <Button x:Name="btnLoadBackground" Content="load background" HorizontalAlignment="Left" Margin="124,7,0,0" Grid.Row="2" VerticalAlignment="Top" Width="113" Click="btnLoadBackground_Click"/>
+    </Grid>
+</Window>
